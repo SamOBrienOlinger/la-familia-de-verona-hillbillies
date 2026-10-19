@@ -1,0 +1,30 @@
+name: Check collaborative backend
+on:
+  push:
+    branches: [family-map-explorer]
+    paths: ['backend/**', 'tests/**', 'dist/**', 'requirements*.txt', '.github/workflows/backend.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Install backend dependencies when present
+        if: ${{ hashFiles('requirements.txt') != '' }}
+        run: pip install -r requirements.txt
+      - name: Run backend tests when present
+        if: ${{ hashFiles('backend/tests/test_*.py') != '' }}
+        run: python -m unittest discover -s backend/tests -v
+      - name: Package the committed source only
+        run: git archive --format=zip HEAD -o "$RUNNER_TEMP/family-map-source.zip"
+      - name: Save source snapshot
+        uses: actions/upload-artifact@v5
+        with:
+          name: family-map-source
+          path: ${{ runner.temp }}/family-map-source.zip
+          retention-days: 7
