@@ -2,103 +2,151 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#244c40">
-  <meta name="description" content="Explore the Egelka family tree and discover family photographs and videos. Select a name to open their family memories.">
-  <title>La Familia de Verona Hillbillies · Egelka Family Tree</title>
+  <meta name="description" content="Explore the Egelka family as an interactive map. Find a person, follow connections between generations, and open family photographs and videos.">
+  <title>Family Map · La Familia de Verona Hillbillies</title>
   <link rel="icon" href="assets/tree-mark.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=2">
+  <link rel="stylesheet" href="map.css?v=1">
   <script src="family-data.js?v=3" defer></script>
-  <script src="app.js?v=2" defer></script>
+  <script src="family-graph.js?v=1" defer></script>
+  <script src="map-core.js?v=1" defer></script>
+  <script src="map.js?v=1" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#explorer">Skip to the family tree</a>
-  <header class="site-header">
-    <a class="brand" href="./" aria-label="La Familia de Verona Hillbillies home">
+  <a class="skip-link" href="#map-search">Skip to family search</a>
+  <svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.6 4.6"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+      <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.6 2.6 0 0 1 5 .9c0 2-2.5 2-2.5 4M12 17h.01"/></symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="5" rx="1.3"/><rect x="2" y="16" width="6" height="5" rx="1.3"/><rect x="16" y="16" width="6" height="5" rx="1.3"/><path d="M12 8v4M5 16v-4h14v4"/></symbol>
+      <symbol id="i-camera" viewBox="0 0 24 24"><path d="m8 6 2-3h4l2 3h4a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></symbol>
+      <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6M18 14a5 5 0 0 1 3 4v2"/></symbol>
+      <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="M8 5h8a4 4 0 0 1 0 8H8a3 3 0 0 0 0 6h8"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+      <symbol id="i-fit" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/><rect x="8" y="8" width="8" height="8" rx="1"/></symbol>
+      <symbol id="i-locate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 10 5-10 5L2 8l10-5ZM2 12l10 5 10-5M2 16l10 5 10-5"/></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+      <symbol id="i-move" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18m-12-6 3-3 3 3m-6 12 3 3 3-3M6 9l-3 3 3 3m12-6 3 3-3 3"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="map-header">
+    <a class="brand" href="index.html" aria-label="La Familia, Family Map home">
       <img src="assets/tree-mark.svg" alt="" width="38" height="38">
-      <span>La Familia<span class="brand-small">DE VERONA HILLBILLIES</span></span>
+      <span class="brand-name">La Familia<span class="brand-small">FAMILY MAP</span></span>
     </a>
-    <a class="about-link" href="#about-tree">About the tree</a>
+    <div class="chart-switch" role="group" aria-label="Choose a family chart">
+      <button type="button" data-chart="renee" aria-pressed="true">Renee’s branch</button>
+      <button type="button" data-chart="bernard" aria-pressed="false">Whole family</button>
+    </div>
+    <div class="mobile-chart-switch">
+      <label class="visually-hidden" for="chart-select">Choose a family chart</label>
+      <select id="chart-select"><option value="renee">Renee’s branch</option><option value="bernard">Whole family</option></select>
+    </div>
+    <nav class="header-actions" aria-label="Family map information">
+      <a class="original-link" href="tree.html"><svg class="icon" aria-hidden="true"><use href="#i-chart"/></svg><span>Original charts</span></a>
+      <button class="icon-button help-button" type="button" id="help-open" aria-label="How to explore the family map" title="How to explore"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg></button>
+    </nav>
   </header>
 
-  <main>
-    <section class="introduction" aria-labelledby="page-title">
-      <div class="intro-copy">
-        <p class="eyebrow">OUR FAMILY ALBUM</p>
-        <h1 id="page-title">A name. A face.<br><em>A family connection.</em></h1>
-        <p class="intro-description">Explore the Egelka family tree. Select a name to discover family photographs and videos.</p>
+  <main id="map-app" aria-label="Family map explorer">
+    <div id="map-viewport" tabindex="0" role="region" aria-label="Interactive family map. Use arrow keys to move and plus or minus to zoom." aria-describedby="map-hint">
+      <div id="map-world">
+        <div id="generation-bands" aria-hidden="true"></div>
+        <svg id="connection-lines" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+        <div id="person-markers"></div>
       </div>
-      <button class="featured-photo" id="featured-photo" type="button" aria-label="Open the photograph of Jenna and Cromwell">
-        <span class="featured-image"><img src="assets/jenna-and-cromwell.png" alt="Jenna and Cromwell together" width="320" height="427"></span>
-        <span class="featured-caption"><span class="eyebrow">IN THE ALBUM</span><strong>Jenna &amp; Cromwell</strong><span class="featured-action">Open photograph <span aria-hidden="true">↗</span></span></span>
-      </button>
-    </section>
+    </div>
 
-    <section class="explorer" id="explorer" aria-labelledby="tree-heading" tabindex="-1">
-      <div class="explorer-heading">
-        <div><p class="eyebrow">EXPLORE THE CONNECTIONS</p><h2 id="tree-heading">The family tree</h2></div>
-        <div class="chart-switch" role="group" aria-label="Choose a family chart">
-          <button type="button" data-chart="renee" aria-pressed="true">Renee’s branch</button>
-          <button type="button" data-chart="bernard" aria-pressed="false">Whole family</button>
-        </div>
+    <aside id="sidebar" aria-label="Find and explore family members">
+      <div class="search-shell">
+        <svg class="icon search-icon" aria-hidden="true"><use href="#i-search"/></svg>
+        <label class="visually-hidden" for="map-search">Search the family by name</label>
+        <input type="search" id="map-search" placeholder="Search your family…" autocomplete="off" autocapitalize="words" spellcheck="false" aria-controls="panel-body" aria-describedby="search-hint">
+        <button type="button" class="icon-button clear-search" id="clear-search" aria-label="Clear family search" title="Clear search" hidden><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+        <span id="search-hint" class="visually-hidden">Search by first name, surname or a known name variant. Select a result to find them on the map.</span>
       </div>
-      <div class="toolbar">
-        <div class="search-wrap">
-          <label class="visually-hidden" for="name-search">Find a person by name</label>
-          <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
-          <input id="name-search" type="search" placeholder="Find a name in this chart…" autocomplete="off" aria-controls="search-results" aria-describedby="search-hint">
-          <span id="search-hint" class="visually-hidden">Search the selected chart by first name, family name, or a known name variant.</span>
-          <div class="search-results" id="search-results" hidden></div>
+      <section class="panel-shell" aria-label="Family information">
+        <button id="panel-toggle" type="button" aria-expanded="false" aria-controls="panel-body"><span class="sheet-handle" aria-hidden="true"></span><span id="panel-label">Explore the family</span><svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+        <div id="panel-body">
+          <p class="eyebrow">A FAMILY, CONNECTED</p>
+          <h1 class="panel-title">Every name has a story.</h1>
+          <p class="panel-intro">Find someone you know, follow a connection, or discover another generation.</p>
+          <div class="loading-state" role="status"><span class="loading-dot" aria-hidden="true"></span>Opening the family map…</div>
         </div>
-        <div class="view-switch" role="group" aria-label="Choose how to explore the family">
-          <button type="button" data-view="diagram" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="2" y="16" width="6" height="5" rx="1"/><rect x="16" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M5 16v-4h14v4"/></svg>Diagram</button>
-          <button type="button" data-view="names" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Names</button>
-        </div>
+      </section>
+    </aside>
+
+    <div class="map-toolbar" aria-label="Explore map layers and generations">
+      <div class="quick-filters" role="group" aria-label="Filter family members">
+        <button type="button" class="filter-chip" id="filter-all" aria-pressed="true"><svg class="icon" aria-hidden="true"><use href="#i-people"/></svg><span>All people</span></button>
+        <button type="button" class="filter-chip" id="filter-memories" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-camera"/></svg><span>Memories</span></button>
       </div>
-      <div class="chart-meta">
-        <p id="chart-summary"></p>
-        <div class="zoom-controls" id="zoom-controls" role="group" aria-label="Diagram zoom controls">
-          <button type="button" id="zoom-out" class="icon-button" aria-label="Zoom out"><span aria-hidden="true">−</span></button>
-          <output id="zoom-level" aria-live="off">100%</output>
-          <button type="button" id="zoom-in" class="icon-button" aria-label="Zoom in"><span aria-hidden="true">+</span></button>
-          <button type="button" id="fit-tree" class="fit-button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/></svg>Fit tree</button>
-        </div>
-      </div>
-      <div id="diagram-view">
-        <p class="diagram-help" id="diagram-help"><span class="help-dot" aria-hidden="true"></span><span id="diagram-help-text">Select a name to open a profile. Drag or scroll to explore the diagram.</span></p>
-        <div class="tree-viewport" id="tree-viewport" tabindex="0" role="region" aria-label="Family tree diagram. Scroll to explore, or switch to the Names view." aria-describedby="diagram-help">
-          <div class="tree-canvas" id="tree-canvas">
-            <img id="tree-artwork" alt="" draggable="false">
-            <div id="person-hotspots"></div>
+      <button type="button" class="route-open" id="route-open"><svg class="icon" aria-hidden="true"><use href="#i-route"/></svg><span>Find connection</span></button>
+      <div class="generation-tools"><span class="generation-nav-label" id="generation-nav-label">Generations</span><div id="generation-nav" role="group" aria-labelledby="generation-nav-label"></div></div>
+    </div>
+
+    <div class="map-controls" aria-label="Map controls">
+      <div class="utility-controls">
+        <div class="layers-control">
+          <button type="button" class="icon-button floating-button" id="layers-toggle" aria-label="Map display options" aria-expanded="false" aria-controls="layers-panel" title="Map display options"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg></button>
+          <div id="layers-panel" hidden>
+            <p class="eyebrow">MAP DISPLAY</p>
+            <label><input type="checkbox" id="show-generations" checked><span>Generation bands</span></label>
+            <label><input type="checkbox" id="show-dates" checked><span>Dates on the map</span></label>
+            <label><input type="checkbox" id="show-partners" checked><span>Partner connections</span></label>
+            <div class="connection-key"><span><i aria-hidden="true"></i>Parent and child</span><span><i class="partner-key" aria-hidden="true"></i>Partners</span></div>
           </div>
         </div>
+        <button type="button" class="icon-button floating-button" id="locate-person" aria-label="Centre on the selected person" title="Centre on selected person" disabled><svg class="icon" aria-hidden="true"><use href="#i-locate"/></svg></button>
+        <button type="button" class="icon-button floating-button" id="fit-map" aria-label="Fit the whole family map in view" title="Fit the whole map"><svg class="icon" aria-hidden="true"><use href="#i-fit"/></svg></button>
       </div>
-      <div class="names-view" id="names-view" hidden>
-        <div class="names-intro"><h3 id="names-heading">Names in this chart</h3><p>Choose a person to open their profile.</p></div>
-        <ul class="people-grid" id="people-list" aria-labelledby="names-heading"></ul>
-        <p class="empty-search" id="empty-search" hidden>No names match. Try a first name or family name.</p>
+      <div class="zoom-cluster" role="group" aria-label="Map zoom">
+        <button type="button" class="icon-button" id="zoom-in" aria-label="Zoom in" title="Zoom in"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
+        <output id="zoom-value" aria-label="Current map zoom">100%</output>
+        <button type="button" class="icon-button" id="zoom-out" aria-label="Zoom out" title="Zoom out"><svg class="icon" aria-hidden="true"><use href="#i-minus"/></svg></button>
       </div>
-      <div class="explorer-footer"><span class="photo-key"><span class="media-key-symbols" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 6l2-3h4l2 3h4a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg></span><span>Symbols mark names with a photograph or video</span></span><span id="view-status" role="status" aria-live="polite"></span></div>
-    </section>
-
-    <section class="about-tree" id="about-tree" aria-labelledby="about-heading">
-      <div class="about-artwork" aria-hidden="true"><img src="assets/family-tree-illustration.png" alt="" width="1254" height="1254" loading="lazy" decoding="async"></div>
-      <div><p class="eyebrow">A GROWING FAMILY RECORD</p><h2 id="about-heading">Every memory adds to the story.</h2><p>This project began with Bill gathering the names of the next generation. These two family charts bring those connections together, with space for photographs and videos as relatives share them.</p><p class="source-note">Names, dates and connections follow the selected original chart. Some details differ between the records and are still to be confirmed by the family.</p><div class="source-links"><a href="assets/renee-descendant-chart.pdf" target="_blank" rel="noopener">Renee’s original chart <span>(PDF)</span></a><a href="assets/bernard-descendant-chart.pdf" target="_blank" rel="noopener">Bernard’s original chart <span>(PDF)</span></a></div></div>
-    </section>
-  </main>
-  <footer class="site-footer"><span>La Familia de Verona Hillbillies</span><span>One family. Many stories.</span></footer>
-
-  <dialog class="person-dialog" id="person-dialog" aria-labelledby="person-title">
-    <button class="dialog-close" id="dialog-close" type="button" aria-label="Close profile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
-    <div class="dialog-layout">
-      <div class="dialog-media" id="dialog-media">
-        <img id="person-photo" alt="" hidden>
-        <video id="person-video" controls playsinline preload="metadata" tabindex="0" aria-labelledby="person-title" aria-describedby="photo-caption" hidden>Your browser does not support embedded video.</video>
-        <div class="photo-placeholder" id="photo-placeholder" hidden><span class="placeholder-initials" id="placeholder-initials" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l2-3h4l2 3h4a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><h3>No photo or video added yet</h3><p>This profile is ready for a family photograph or video.</p></div>
-      </div>
-      <div class="dialog-copy"><p class="eyebrow" id="profile-eyebrow">FAMILY PROFILE</p><h2 id="person-title"></h2><p class="photo-caption" id="photo-caption" hidden></p><p class="profile-source" id="profile-source"></p><div class="profile-details" id="profile-details"></div><div class="photo-people" id="photo-people" hidden><p class="eyebrow" id="media-people-heading">PEOPLE FEATURED</p><div id="photo-people-buttons"></div></div><button type="button" class="primary-button" id="show-on-tree">Find on the tree <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div>
     </div>
+
+    <button type="button" id="minimap" aria-label="Overview of the family map. Select a position to move there." title="Move around the family map"><span class="minimap-label" aria-hidden="true">Overview</span><svg id="minimap-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect id="minimap-view" x="0" y="0" width="0" height="0" rx="3"/></svg></button>
+
+    <div class="map-caption">
+      <div class="map-caption-title"><span class="map-live-dot" aria-hidden="true"></span><h2 id="map-label">The Egelka family</h2></div>
+      <p id="map-subtitle">Discover the connections between generations.</p>
+      <p id="map-hint"><svg class="icon" aria-hidden="true"><use href="#i-move"/></svg><span>Drag to explore · Scroll or pinch to zoom</span></p>
+    </div>
+    <p id="map-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
+    <div id="load-error" role="alert" hidden>The family map could not open. You can still <a href="tree.html">explore the original charts</a>.</div>
+  </main>
+
+  <dialog id="help-dialog" aria-labelledby="help-title">
+    <button type="button" id="help-close" class="icon-button dialog-close" aria-label="Close map help"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+    <p class="eyebrow">MAKE YOURSELF AT HOME</p>
+    <h2 id="help-title">A map of your people.</h2>
+    <p class="help-intro">Explore the family one connection at a time. Each person is a place to begin.</p>
+    <div class="help-grid">
+      <section><span class="help-icon"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></span><h3>Find a familiar name</h3><p>Search for a person and select their result. Their profile opens with photographs, videos and family connections.</p></section>
+      <section><span class="help-icon"><svg class="icon" aria-hidden="true"><use href="#i-move"/></svg></span><h3>Move through the family</h3><p>Drag the map to move around. Scroll, pinch, or use the + and − buttons to zoom. Fit the map to see the whole branch.</p></section>
+      <section><span class="help-icon"><svg class="icon" aria-hidden="true"><use href="#i-route"/></svg></span><h3>Follow a connection</h3><p>Choose “Find connection” and select two people. Follow the highlighted path to see how their family records connect.</p></section>
+      <section><span class="help-icon"><svg class="icon" aria-hidden="true"><use href="#i-chart"/></svg></span><h3>Explore a generation</h3><p>Use the generation buttons to move between columns of the family. Solid lines link parents and children; dashed lines link partners.</p></section>
+    </div>
+    <div class="keyboard-help"><h3>Prefer the keyboard?</h3><p>Press <kbd>Tab</kbd> to move between controls. With the map focused, use <kbd>←</kbd> <kbd>↑</kbd> <kbd>↓</kbd> <kbd>→</kbd> to move, <kbd>+</kbd> and <kbd>−</kbd> to zoom. Select a person with <kbd>Enter</kbd>. Press <kbd>Esc</kbd> to close this guide.</p></div>
+    <p class="source-note">Names, dates and relationships follow the selected original family chart. Generations are counted from the starting person in that chart, so they may differ between the two views. Some details in the records are still to be confirmed by the family.</p>
+    <a class="secondary-button help-chart-link" href="tree.html"><svg class="icon" aria-hidden="true"><use href="#i-chart"/></svg>Explore the original charts</a>
   </dialog>
-  <noscript><div class="noscript-note">Enable JavaScript to open family profiles, photographs and videos. You can still view the original PDF charts linked below the tree.</div></noscript>
+
+  <dialog id="media-dialog" class="media-dialog" aria-labelledby="media-title">
+    <button type="button" id="media-close" class="icon-button dialog-close" aria-label="Close photograph or video"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+    <h2 id="media-title"></h2>
+    <img id="expanded-photo" alt="" hidden>
+    <video id="expanded-video" controls playsinline preload="metadata" hidden>Your browser does not support embedded video.</video>
+    <p id="media-caption"></p>
+  </dialog>
+
+  <noscript><div class="noscript-note"><h1>The family map needs JavaScript.</h1><p>You can still explore the original family charts:</p><a href="assets/renee-descendant-chart.pdf">Renee’s chart (PDF)</a><a href="assets/bernard-descendant-chart.pdf">Bernard’s chart (PDF)</a></div></noscript>
 </body>
 </html>

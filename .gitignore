@@ -1,4 +1,4 @@
-.openai/
-.DS_Store
+node_modules/
+test-results/
+.test-tools/
 __pycache__/
-*.pyc

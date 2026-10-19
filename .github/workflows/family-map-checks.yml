@@ -1,0 +1,53 @@
+name: Check family map
+
+on:
+  push:
+    branches: [family-map-explorer]
+  pull_request:
+    branches: [main, family-map-explorer]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: family-map-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out this branch
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Check family graph and JavaScript
+        run: |
+          node --check dist/map.js
+          node tests/map-core.test.cjs
+
+      - name: Install isolated test dependencies
+        run: npm install --prefix "$RUNNER_TEMP/family-map-tests" --no-audit --no-fund playwright@1.62.1 linkedom@0.18.13
+
+      - name: Install Chromium for local app testing
+        run: node "$RUNNER_TEMP/family-map-tests/node_modules/playwright/cli.js" install --with-deps --only-shell chromium
+
+      - name: Check DOM interactions
+        run: NODE_PATH="$RUNNER_TEMP/family-map-tests/node_modules" node tests/map-dom.test.cjs
+
+      - name: Check desktop and mobile in Chromium
+        run: NODE_PATH="$RUNNER_TEMP/family-map-tests/node_modules" node tests/map-browser.test.cjs
+
+      - name: Save browser screenshots and results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: family-map-browser-checks
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 7
