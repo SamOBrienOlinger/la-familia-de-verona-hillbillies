@@ -18,6 +18,7 @@
   var list = byId('people-list');
   var dialog = byId('person-dialog');
   var photo = byId('person-photo');
+  var video = byId('person-video');
   var placeholder = byId('photo-placeholder');
   var closeButton = byId('dialog-close');
   var mediaQuery = function (query) { return typeof window.matchMedia === 'function' && window.matchMedia(query).matches; };
@@ -35,7 +36,9 @@
   var normalise = function (value) {
     return String(value).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[’']/g, '').replace(/[-‐‑–]/g, ' ').replace(/\s+/g, ' ').trim();
   };
-  var hasPhoto = function (person) { return !!(person.photoGroup && data.photoGroups[person.photoGroup]); };
+  var mediaFor = function (person) { return person.mediaGroup && data.mediaGroups[person.mediaGroup] || null; };
+  var hasMedia = function (person) { return !!mediaFor(person); };
+  var mediaKind = function (person) { return mediaFor(person) && mediaFor(person).type === 'video' ? 'video' : 'photograph'; };
   var personById = function (id) { return state.chart.people.find(function (person) { return person.id === id; }); };
   var initials = function (name) {
     var parts = name.replace(/\([^)]*\)/g, '').trim().split(/\s+/).filter(Boolean);
@@ -55,10 +58,12 @@
     if (text !== undefined) element.textContent = text;
     return element;
   };
-  var camera = function (className) {
+  var mediaBadge = function (className, person) {
     var span = create('span', className);
     span.setAttribute('aria-hidden', 'true');
-    span.innerHTML = cameraMarkup;
+    span.innerHTML = mediaKind(person) === 'video'
+      ? '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/></svg>'
+      : cameraMarkup;
     return span;
   };
 
@@ -130,7 +135,7 @@
     artwork.setAttribute('height', state.chart.height);
     hotspots.replaceChildren();
     state.chart.people.forEach(function (person) {
-      var button = create('button', 'person-hotspot' + (hasPhoto(person) ? ' has-photo' : ''));
+      var button = create('button', 'person-hotspot' + (hasMedia(person) ? ' has-photo' : ''));
       button.type = 'button';
       button.dataset.personId = person.id;
       button.id = 'card-' + person.id;
@@ -138,17 +143,18 @@
       button.style.top = (person.y / state.chart.height * 100) + '%';
       button.style.width = (person.w / state.chart.width * 100) + '%';
       button.style.height = (person.h / state.chart.height * 100) + '%';
-      button.setAttribute('aria-label', person.name + (hasPhoto(person) ? ', open photograph' : ', open profile. Photo not yet added'));
+      button.setAttribute('aria-label', person.name + (hasMedia(person) ? ', open ' + mediaKind(person) : ', open profile. Photo or video not yet added'));
       button.setAttribute('aria-haspopup', 'dialog');
-      button.title = person.name + (hasPhoto(person) ? ' — View photograph' : ' — Open profile');
-      if (hasPhoto(person)) button.appendChild(camera('photo-badge'));
+      button.title = person.name + (hasMedia(person) ? ' — Open ' + mediaKind(person) : ' — Open profile');
+      if (hasMedia(person)) button.appendChild(mediaBadge('photo-badge', person));
       hotspots.appendChild(button);
     });
     document.querySelectorAll('[data-chart]').forEach(function (button) {
       button.setAttribute('aria-pressed', String(button.dataset.chart === state.chart.id));
     });
-    var photographed = state.chart.people.filter(hasPhoto).length;
-    byId('chart-summary').textContent = state.chart.people.length + ' names · ' + photographed + ' linked to a photograph';
+    var linked = state.chart.people.filter(hasMedia);
+    var videoCount = linked.filter(function (person) { return mediaKind(person) === 'video'; }).length;
+    byId('chart-summary').textContent = state.chart.people.length + ' names · ' + (linked.length - videoCount) + ' with a photo · ' + videoCount + ' with a video';
     searchResults.hidden = true;
     syncView();
     var width = viewport.clientWidth || Math.max(280, window.innerWidth - 80);
@@ -172,15 +178,17 @@
     list.replaceChildren();
     people.forEach(function (person) {
       var item = create('li');
-      var button = create('button', 'person-list-button' + (hasPhoto(person) ? ' has-photo' : ''));
+      var button = create('button', 'person-list-button' + (hasMedia(person) ? ' has-photo' : ''));
       button.type = 'button';
       button.dataset.personId = person.id;
       button.setAttribute('aria-haspopup', 'dialog');
       var avatar = create('span', 'list-avatar');
       avatar.setAttribute('aria-hidden', 'true');
-      if (hasPhoto(person)) {
+      var group = mediaFor(person);
+      var thumbnail = group && (group.type === 'video' ? group.poster : group.src);
+      if (thumbnail) {
         var thumb = create('img');
-        thumb.src = data.photoGroups[person.photoGroup].src;
+        thumb.src = thumbnail;
         thumb.alt = '';
         thumb.loading = 'lazy';
         avatar.appendChild(thumb);
@@ -189,10 +197,10 @@
       }
       var text = create('span', 'list-person-copy');
       text.appendChild(create('span', 'list-person-name', person.name));
-      text.appendChild(create('span', 'list-photo-status', hasPhoto(person) ? 'Open photograph' : 'Photo still to be added'));
+      text.appendChild(create('span', 'list-photo-status', hasMedia(person) ? (mediaKind(person) === 'video' ? 'Watch video' : 'Open photograph') : 'Photo or video still to be added'));
       button.appendChild(avatar);
       button.appendChild(text);
-      if (hasPhoto(person)) button.appendChild(camera('list-camera'));
+      if (hasMedia(person)) button.appendChild(mediaBadge('list-camera', person));
       item.appendChild(button);
       list.appendChild(item);
     });
@@ -214,7 +222,7 @@
       button.dataset.personId = person.id;
       button.setAttribute('aria-haspopup', 'dialog');
       button.appendChild(create('span', '', person.name));
-      if (hasPhoto(person)) button.appendChild(camera(''));
+      if (hasMedia(person)) button.appendChild(mediaBadge('', person));
       item.appendChild(button);
       items.appendChild(item);
     });
@@ -250,11 +258,22 @@
     });
   }
 
-  function showPlaceholder(loadFailed) {
+  function resetVideo() {
+    video.onerror = null;
+    video.pause();
+    video.removeAttribute('src');
+    video.removeAttribute('poster');
+    video.load();
+    video.hidden = true;
+  }
+
+  function showPlaceholder(loadFailed, kind) {
     photo.hidden = true;
+    video.pause();
+    video.hidden = true;
     placeholder.hidden = false;
-    placeholder.querySelector('h3').textContent = loadFailed ? 'Photograph could not load' : 'No photo added yet';
-    placeholder.querySelector('p').textContent = loadFailed ? 'Please close this profile and try again.' : 'This profile is ready for a family photograph.';
+    placeholder.querySelector('h3').textContent = loadFailed ? (kind === 'video' ? 'Video could not load' : 'Photograph could not load') : 'No photo or video added yet';
+    placeholder.querySelector('p').textContent = loadFailed ? 'Please close this profile and try again.' : 'This profile is ready for a family photograph or video.';
   }
 
   function dialogIsOpen() {
@@ -275,17 +294,28 @@
     byId('person-title').textContent = person.name;
     byId('placeholder-initials').textContent = initials(person.name);
     byId('profile-source').textContent = 'Recorded in ' + state.chart.label + '.';
-    var group = hasPhoto(person) ? data.photoGroups[person.photoGroup] : null;
-    byId('profile-eyebrow').textContent = group ? 'FROM THE FAMILY ALBUM' : 'FAMILY PROFILE';
+    var group = mediaFor(person);
+    var isVideo = group && group.type === 'video';
+    byId('profile-eyebrow').textContent = group ? (isVideo ? 'A FAMILY VIDEO' : 'FROM THE FAMILY ALBUM') : 'FAMILY PROFILE';
     byId('photo-caption').hidden = !group;
     byId('photo-caption').textContent = group ? group.caption : '';
     photo.onerror = null;
-    if (group) {
+    resetVideo();
+    if (isVideo) {
+      photo.hidden = true;
+      photo.removeAttribute('src');
+      placeholder.hidden = true;
+      video.setAttribute('aria-label', group.alt || group.caption || 'Family video');
+      if (group.poster) video.poster = group.poster;
+      video.onerror = function () { showPlaceholder(true, 'video'); };
+      video.src = group.src;
+      video.hidden = false;
+    } else if (group) {
       placeholder.hidden = true;
       photo.alt = group.alt;
+      photo.onerror = function () { showPlaceholder(true, 'photograph'); };
       photo.src = group.src;
       photo.hidden = false;
-      photo.onerror = function () { showPlaceholder(true); };
     } else {
       photo.removeAttribute('src');
       photo.alt = '';
@@ -299,16 +329,17 @@
       person.lines.forEach(function (line) { details.appendChild(create('p', '', readableLine(line))); });
       detailsContainer.appendChild(details);
     }
-    var companions = group ? state.chart.people.filter(function (entry) { return entry.photoGroup === person.photoGroup; }) : [];
-    byId('photo-people').hidden = !companions.length;
+    var companions = group ? state.chart.people.filter(function (entry) { return entry.mediaGroup === person.mediaGroup; }) : [];
+    byId('photo-people').hidden = companions.length < 2;
+    byId('photo-people').querySelector('.eyebrow').textContent = isVideo ? 'VIDEO PROFILES' : 'IN THIS PHOTOGRAPH';
     var companionButtons = byId('photo-people-buttons');
     companionButtons.replaceChildren();
     companions.forEach(function (companion) {
-      var label = companion.photoLabel || companion.name;
+      var label = companion.mediaLabel || companion.name;
       var button = create('button', '', label);
       button.type = 'button';
       button.dataset.companionId = companion.id;
-      button.setAttribute('aria-label', 'View ' + companion.name + ' in this photograph');
+      button.setAttribute('aria-label', 'View ' + companion.name + ' in this ' + (isVideo ? 'video' : 'photograph'));
       button.setAttribute('aria-pressed', String(companion.id === person.id));
       companionButtons.appendChild(button);
     });
@@ -327,6 +358,7 @@
   }
 
   function afterClose() {
+    resetVideo();
     document.body.classList.remove('dialog-open');
     setFallbackBackground(false);
     var returnFocus = state.returnFocus;
@@ -336,6 +368,7 @@
 
   function closeDialog() {
     if (!dialogIsOpen()) return;
+    video.pause();
     if (dialog.dataset.fallbackOpen === 'true') {
       dialog.removeAttribute('open');
       delete dialog.dataset.fallbackOpen;
@@ -376,7 +409,7 @@
     });
   });
   byId('featured-photo').addEventListener('click', function (event) {
-    var jenna = state.chart.people.find(function (person) { return person.photoGroup === 'jenna-cromwell' && person.name.indexOf('Jenna') === 0; });
+    var jenna = state.chart.people.find(function (person) { return person.mediaGroup === 'jenna-cromwell' && person.name.indexOf('Jenna') === 0; });
     openPerson(jenna, event.currentTarget);
   });
   search.addEventListener('input', function () { updateMatches(true); });
@@ -424,7 +457,7 @@
   dialog.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') { event.preventDefault(); closeDialog(); return; }
     if (event.key !== 'Tab') return;
-    var focusable = Array.from(dialog.querySelectorAll('button, a[href], input, summary, [tabindex="0"]')).filter(function (element) {
+    var focusable = Array.from(dialog.querySelectorAll('button, a[href], input, summary, video[controls], [tabindex="0"]')).filter(function (element) {
       return !element.disabled && !element.closest('[hidden]');
     });
     if (!focusable.length) { event.preventDefault(); closeButton.focus(); return; }

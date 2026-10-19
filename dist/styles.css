@@ -9,7 +9,7 @@ button,a{-webkit-tap-highlight-color:transparent}
 button{color:inherit}
 button{cursor:pointer}
 a{color:var(--green);text-underline-offset:.23em}
-button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid #9c6c23;outline-offset:4px}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,video:focus-visible,[tabindex]:focus-visible{outline:3px solid #9c6c23;outline-offset:4px}
 button:disabled{cursor:default;opacity:.35}
 svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 img{max-width:100%}
@@ -104,6 +104,7 @@ h1 em{font-weight:400;color:var(--green)}
 .empty-search{padding:42px 10px;text-align:center;color:var(--muted);font-size:14px}
 .explorer-footer{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 30px;border-top:1px solid #e7eade;background:white;font-size:10px;color:var(--muted);min-height:49px}
 .photo-key{display:flex;align-items:center;gap:8px}
+.media-key-symbols{display:inline-flex;align-items:center;gap:4px;flex:none}
 .photo-key svg{width:14px;height:14px;color:var(--green)}
 #view-status{font-size:10px;text-align:right}
 .about-tree{max-width:830px;display:flex;align-items:flex-start;gap:24px;padding-block:57px 45px}
@@ -126,6 +127,7 @@ h1 em{font-weight:400;color:var(--green)}
 .dialog-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);min-height:500px}
 .dialog-media{display:flex;align-items:center;justify-content:center;background:#e9e8df;min-height:400px}
 #person-photo{display:block;width:100%;height:auto;max-height:calc(100vh - 80px);object-fit:contain}
+#person-video{display:block;width:100%;max-width:100%;height:auto;min-width:0;max-height:calc(100vh - 80px);max-height:calc(100dvh - 80px);object-fit:contain;background:#101f19;outline-offset:-3px}
 .dialog-copy{padding:70px 34px 34px;display:flex;flex-direction:column;align-items:flex-start;min-width:0}
 .dialog-copy .eyebrow{font-size:9px}
 #person-title{font-family:Georgia,"Times New Roman",serif;font-size:34px;font-weight:400;line-height:1.17;letter-spacing:-.03em;margin:0 0 12px}
@@ -160,3 +162,6 @@ body.dialog-open{overflow:hidden}
 .profile-details summary{cursor:pointer;min-height:40px;display:list-item;align-content:center;font-size:11px;font-weight:600;color:var(--green)}
 .profile-details details[open] summary{margin-bottom:9px}
 @media(max-width:560px){#name-search{font-size:16px}}
+@media(max-width:560px){#person-video{width:100%;height:auto;min-height:0;max-height:54vh;max-height:54dvh}}
+#person-video:fullscreen{width:100%;height:100%;max-height:none;object-fit:contain;background:#000}
+#person-video:-webkit-full-screen{width:100%;height:100%;max-height:none;object-fit:contain;background:#000}

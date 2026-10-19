@@ -44,6 +44,11 @@ PHOTO_NAMES = {
     ],
 }
 
+VIDEO_NAMES = {
+    "Daniel Joseph Kole": ["Dan Kole", "Daniel Kole", "Dan Joseph Kole"],
+    "Daniel Kole": ["Dan Kole", "Daniel Joseph Kole", "Dan Joseph Kole"],
+}
+
 
 def slug(value):
     ascii_value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode()
@@ -111,22 +116,24 @@ def extract_chart(spec, source_dir, output_dir):
             assert headings, (spec["id"], "card has no heading", card)
             name = heading_text(headings)
             has_photo = name in PHOTO_NAMES
+            has_video = name in VIDEO_NAMES
             people.append({
                 "id": spec["id"] + "-" + slug(name),
                 "name": name,
-                "aliases": PHOTO_NAMES.get(name, []),
+                "aliases": PHOTO_NAMES.get(name, VIDEO_NAMES.get(name, [])),
                 "x": round(card.x0, 3),
                 "y": round(card.y0, 3),
                 "w": round(card.width, 3),
                 "h": round(card.height, 3),
                 "lines": text_rows(details),
-                "photoGroup": "jenna-cromwell" if has_photo else None,
-                "photoLabel": ("Jenna" if name.startswith("Jenna") else "Cromwell") if has_photo else None,
+                "mediaGroup": "jenna-cromwell" if has_photo else ("dan-kole" if has_video else None),
+                "mediaLabel": ("Jenna" if name.startswith("Jenna") else "Cromwell") if has_photo else ("Dan" if has_video else None),
             })
 
         assert all(count == 1 for count in assignments), "Every text span must belong to one card."
         assert len({person["id"] for person in people}) == len(people), "Duplicate person IDs."
-        assert sum(person["photoGroup"] is not None for person in people) == 2
+        assert sum(person["mediaGroup"] == "jenna-cromwell" for person in people) == 2
+        assert sum(person["mediaGroup"] == "dan-kole" for person in people) == 1
         for card in cards:
             assert page.rect.contains(card), "Card lies outside the original page."
         for i, first in enumerate(cards):
@@ -165,7 +172,7 @@ def extract_chart(spec, source_dir, output_dir):
                 round(max(card.y1 for card in cards), 3),
             ],
             "pageSize": [page.rect.width, page.rect.height],
-            "photoCards": [person["name"] for person in people if person["photoGroup"]],
+            "mediaCards": [person["name"] for person in people if person["mediaGroup"]],
             "svgBytes": len(svg.encode("utf-8")),
         }
         return chart, report
@@ -185,12 +192,21 @@ def main():
         reports.append(report)
     data = {
         "charts": charts,
-        "photoGroups": {
+        "mediaGroups": {
             "jenna-cromwell": {
+                "type": "image",
                 "src": "assets/jenna-and-cromwell.png",
                 "caption": "Jenna and Cromwell",
                 "alt": "Jenna and Cromwell together",
                 "names": ["Jenna", "Cromwell"],
+            },
+            "dan-kole": {
+                "type": "video",
+                "src": "assets/dan-kole.mp4",
+                "poster": "assets/dan-kole-poster.jpg",
+                "caption": "Dan Kole",
+                "alt": "Family video for Dan Kole",
+                "names": ["Dan"],
             },
         },
     }

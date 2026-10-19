@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#244c40">
-  <meta name="description" content="Explore the Egelka family tree and discover family photographs. Select a name to open their photograph.">
+  <meta name="description" content="Explore the Egelka family tree and discover family photographs and videos. Select a name to open their family memories.">
   <title>La Familia de Verona Hillbillies · Egelka Family Tree</title>
   <link rel="icon" href="assets/tree-mark.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
-  <script src="family-data.js" defer></script>
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=2">
+  <script src="family-data.js?v=2" defer></script>
+  <script src="app.js?v=2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#explorer">Skip to the family tree</a>
@@ -26,7 +26,7 @@
       <div class="intro-copy">
         <p class="eyebrow">OUR FAMILY ALBUM</p>
         <h1 id="page-title">A name. A face.<br><em>A family connection.</em></h1>
-        <p class="intro-description">Explore the Egelka family tree. Select a name to open their photograph and put a face to the family story.</p>
+        <p class="intro-description">Explore the Egelka family tree. Select a name to discover family photographs and videos.</p>
       </div>
       <button class="featured-photo" id="featured-photo" type="button" aria-label="Open the photograph of Jenna and Cromwell">
         <span class="featured-image"><img src="assets/jenna-and-cromwell.png" alt="Jenna and Cromwell together" width="320" height="427"></span>
@@ -78,12 +78,12 @@
         <ul class="people-grid" id="people-list" aria-labelledby="names-heading"></ul>
         <p class="empty-search" id="empty-search" hidden>No names match. Try a first name or family name.</p>
       </div>
-      <div class="explorer-footer"><span class="photo-key"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l2-3h4l2 3h4a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg>Camera marks a name with a photograph</span><span id="view-status" role="status" aria-live="polite"></span></div>
+      <div class="explorer-footer"><span class="photo-key"><span class="media-key-symbols" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 6l2-3h4l2 3h4a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg></span><span>Symbols mark names with a photograph or video</span></span><span id="view-status" role="status" aria-live="polite"></span></div>
     </section>
 
     <section class="about-tree" id="about-tree" aria-labelledby="about-heading">
       <div class="about-artwork" aria-hidden="true"><img src="assets/family-tree-illustration.png" alt="" width="1254" height="1254" loading="lazy" decoding="async"></div>
-      <div><p class="eyebrow">A GROWING FAMILY RECORD</p><h2 id="about-heading">Every photograph adds to the story.</h2><p>This project began with Bill gathering the names of the next generation. These two family charts bring those connections together, with space for photographs as relatives share them.</p><p class="source-note">Names, dates and connections follow the selected original chart. Some details differ between the records and are still to be confirmed by the family.</p><div class="source-links"><a href="assets/renee-descendant-chart.pdf" target="_blank" rel="noopener">Renee’s original chart <span>(PDF)</span></a><a href="assets/bernard-descendant-chart.pdf" target="_blank" rel="noopener">Bernard’s original chart <span>(PDF)</span></a></div></div>
+      <div><p class="eyebrow">A GROWING FAMILY RECORD</p><h2 id="about-heading">Every memory adds to the story.</h2><p>This project began with Bill gathering the names of the next generation. These two family charts bring those connections together, with space for photographs and videos as relatives share them.</p><p class="source-note">Names, dates and connections follow the selected original chart. Some details differ between the records and are still to be confirmed by the family.</p><div class="source-links"><a href="assets/renee-descendant-chart.pdf" target="_blank" rel="noopener">Renee’s original chart <span>(PDF)</span></a><a href="assets/bernard-descendant-chart.pdf" target="_blank" rel="noopener">Bernard’s original chart <span>(PDF)</span></a></div></div>
     </section>
   </main>
   <footer class="site-footer"><span>La Familia de Verona Hillbillies</span><span>One family. Many stories.</span></footer>
@@ -93,11 +93,12 @@
     <div class="dialog-layout">
       <div class="dialog-media" id="dialog-media">
         <img id="person-photo" alt="" hidden>
-        <div class="photo-placeholder" id="photo-placeholder" hidden><span class="placeholder-initials" id="placeholder-initials" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l2-3h4l2 3h4a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><h3>No photo added yet</h3><p>This profile is ready for a family photograph.</p></div>
+        <video id="person-video" controls playsinline preload="metadata" tabindex="0" aria-labelledby="person-title" aria-describedby="photo-caption" hidden>Your browser does not support embedded video.</video>
+        <div class="photo-placeholder" id="photo-placeholder" hidden><span class="placeholder-initials" id="placeholder-initials" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l2-3h4l2 3h4a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><h3>No photo or video added yet</h3><p>This profile is ready for a family photograph or video.</p></div>
       </div>
-      <div class="dialog-copy"><p class="eyebrow" id="profile-eyebrow">FAMILY PROFILE</p><h2 id="person-title"></h2><p class="photo-caption" id="photo-caption" hidden></p><p class="profile-source" id="profile-source"></p><div class="profile-details" id="profile-details"></div><div class="photo-people" id="photo-people" hidden><p class="eyebrow">IN THIS PHOTOGRAPH</p><div id="photo-people-buttons"></div></div><button type="button" class="primary-button" id="show-on-tree">Find on the tree <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div>
+      <div class="dialog-copy"><p class="eyebrow" id="profile-eyebrow">FAMILY PROFILE</p><h2 id="person-title"></h2><p class="photo-caption" id="photo-caption" hidden></p><p class="profile-source" id="profile-source"></p><div class="profile-details" id="profile-details"></div><div class="photo-people" id="photo-people" hidden><p class="eyebrow" id="media-people-heading">PEOPLE FEATURED</p><div id="photo-people-buttons"></div></div><button type="button" class="primary-button" id="show-on-tree">Find on the tree <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div>
     </div>
   </dialog>
-  <noscript><div class="noscript-note">Enable JavaScript to open family photo profiles. You can still view the original PDF charts linked below the tree.</div></noscript>
+  <noscript><div class="noscript-note">Enable JavaScript to open family profiles, photographs and videos. You can still view the original PDF charts linked below the tree.</div></noscript>
 </body>
 </html>

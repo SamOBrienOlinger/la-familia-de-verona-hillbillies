@@ -23,8 +23,8 @@ window.FAMILY_DATA = {
             "Mervin Goodman Olinger",
             "Death 3/25/2023"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-mervin-goodman-olinger",
@@ -40,8 +40,8 @@ window.FAMILY_DATA = {
             "Renee Egelka",
             "Death 6/17/2016"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-kenneth-bruce-olinger",
@@ -56,8 +56,8 @@ window.FAMILY_DATA = {
             "Marriage 2/8/1975",
             "Catherine Therese O'Brien"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-susan-carol-olinger",
@@ -72,8 +72,8 @@ window.FAMILY_DATA = {
             "Marriage 9/13/1987",
             "Daniel Joseph Kole"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-lois-madge-olinger",
@@ -88,8 +88,8 @@ window.FAMILY_DATA = {
             "Marriage 10/27/1985",
             "William Probst Stewart"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-catherine-therese-o-brien",
@@ -104,13 +104,17 @@ window.FAMILY_DATA = {
             "Marriage 2/8/1975",
             "Kenneth Bruce Olinger"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-daniel-joseph-kole",
           "name": "Daniel Joseph Kole",
-          "aliases": [],
+          "aliases": [
+            "Dan Kole",
+            "Daniel Kole",
+            "Dan Joseph Kole"
+          ],
           "x": 590.429,
           "y": 557.179,
           "w": 250.0,
@@ -120,8 +124,8 @@ window.FAMILY_DATA = {
             "Marriage 9/13/1987",
             "Susan Carol Olinger"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": "dan-kole",
+          "mediaLabel": "Dan"
         },
         {
           "id": "renee-william-probst-stewart",
@@ -136,8 +140,8 @@ window.FAMILY_DATA = {
             "Marriage 10/27/1985",
             "Lois Madge Olinger"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-sam-timothy-o-brien-olinger",
@@ -150,8 +154,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 6/11/1982"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-brian-kenneth-o-brien-olinger",
@@ -166,8 +170,8 @@ window.FAMILY_DATA = {
             "Marriage 7/24/2022",
             "Ruth Gaj McKeever"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-peter-michael-kole",
@@ -180,8 +184,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 3/10/1989"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-jenna-michelle-kole",
@@ -200,8 +204,8 @@ window.FAMILY_DATA = {
             "Marriage 3/27/2025",
             "David Cromwell (Crom) Johnson"
           ],
-          "photoGroup": "jenna-cromwell",
-          "photoLabel": "Jenna"
+          "mediaGroup": "jenna-cromwell",
+          "mediaLabel": "Jenna"
         },
         {
           "id": "renee-benjamin-probst-stewart",
@@ -214,8 +218,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 1/13/1989"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-joshua-michael-stewart",
@@ -230,8 +234,8 @@ window.FAMILY_DATA = {
             "Marriage 5/15/2021",
             "Janelle Elizabeth Letzen"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-ruth-gaj-mckeever-o-brien-olinger",
@@ -246,8 +250,8 @@ window.FAMILY_DATA = {
             "Marriage 7/24/2022",
             "Brian Kenneth O'Brien-Olinger"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-david-cromwell-crom-johnson",
@@ -267,8 +271,8 @@ window.FAMILY_DATA = {
             "Marriage 3/27/2025",
             "Jenna Michelle Kole"
           ],
-          "photoGroup": "jenna-cromwell",
-          "photoLabel": "Cromwell"
+          "mediaGroup": "jenna-cromwell",
+          "mediaLabel": "Cromwell"
         },
         {
           "id": "renee-emily-kendra-hage",
@@ -281,8 +285,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 7/12/1990"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-janelle-elizabeth-letzen",
@@ -297,8 +301,8 @@ window.FAMILY_DATA = {
             "Marriage 5/15/2021",
             "Joshua Michael Stewart"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-fiachra-kenneth-gaj-o-brien",
@@ -311,8 +315,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 7/6/2014"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-grainne-emer-marie-gaj-o-brien",
@@ -325,8 +329,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 2/25/2017"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-elias-letzen-stewart",
@@ -339,8 +343,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 3/17/2024"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "renee-nico-letzen-stewart",
@@ -353,8 +357,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 5/17/2026"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         }
       ]
     },
@@ -380,8 +384,8 @@ window.FAMILY_DATA = {
             "Pauline Solomon",
             "Death 6/8/1985 (94y 11m 9d)"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-pauline-solomon-egelka",
@@ -397,8 +401,8 @@ window.FAMILY_DATA = {
             "Bernard Egelka",
             "Death 3/6/1977 (74y 8m 6d)"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-renee-egelka",
@@ -411,8 +415,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 11/7/1922"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-roslyn-ann-egelka",
@@ -425,8 +429,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 3/25/1924"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-cynthia-egelka",
@@ -440,8 +444,8 @@ window.FAMILY_DATA = {
             "Birth 10/27/1927",
             "Death 11/15/2015 (88y 19d)"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-mervin-g-olinger",
@@ -455,8 +459,8 @@ window.FAMILY_DATA = {
             "Birth 2/5/1918",
             "Death 6/17"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-george-miller",
@@ -467,8 +471,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-harvey-small",
@@ -479,8 +483,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-kenneth-bruce-olinger",
@@ -493,8 +497,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 4/16/1949"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-susan-carol-olinger",
@@ -507,8 +511,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 1/28/1952"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-lois-madge-olinger",
@@ -523,8 +527,8 @@ window.FAMILY_DATA = {
             "Marriage 10/27/1985 (30y 7m 23d)",
             "William Probst Stewart"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-donald-miller",
@@ -535,8 +539,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-nancy-miller",
@@ -547,8 +551,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-linda-small",
@@ -559,8 +563,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-peggy-small",
@@ -571,8 +575,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-katherine-o-brien-olinger",
@@ -583,13 +587,17 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-daniel-kole",
           "name": "Daniel Kole",
-          "aliases": [],
+          "aliases": [
+            "Dan Kole",
+            "Daniel Joseph Kole",
+            "Dan Joseph Kole"
+          ],
           "x": 990.429,
           "y": 368.679,
           "w": 250.0,
@@ -597,8 +605,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 3/26/1953"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": "dan-kole",
+          "mediaLabel": "Dan"
         },
         {
           "id": "bernard-william-probst-stewart",
@@ -613,8 +621,8 @@ window.FAMILY_DATA = {
             "Marriage 10/27/1985 (34y 2m 18d)",
             "Lois Madge Olinger"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-jill-miller",
@@ -625,8 +633,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-david-michaels",
@@ -637,8 +645,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-stephen-shapiro",
@@ -649,8 +657,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-robert-jed-fox",
@@ -661,8 +669,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-brian-o-brien-olinger",
@@ -673,8 +681,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-samuel-o-brien-olinger",
@@ -685,8 +693,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-jenna-kole",
@@ -701,8 +709,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": "jenna-cromwell",
-          "photoLabel": "Jenna"
+          "mediaGroup": "jenna-cromwell",
+          "mediaLabel": "Jenna"
         },
         {
           "id": "bernard-peter-kole",
@@ -715,8 +723,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 3/10/1990"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-benjamin-probst-stewart",
@@ -729,8 +737,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 1/13/1989"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-joshua-michael-stewart",
@@ -745,8 +753,8 @@ window.FAMILY_DATA = {
             "Marriage 5/15/2021 (28y 9m 28d)",
             "Janelle Letzen"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-ari-miller",
@@ -757,8 +765,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-jordana-miller",
@@ -769,8 +777,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-benjamin-bj-michaels",
@@ -781,8 +789,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-deborah-michaels",
@@ -793,8 +801,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-emily-michaels",
@@ -805,8 +813,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-claudia-shapiro",
@@ -817,8 +825,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-isabel-shapiro",
@@ -829,8 +837,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-julian-shapiro",
@@ -841,8 +849,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-alan-fox",
@@ -853,8 +861,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-scott-fox",
@@ -865,8 +873,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-cromwell-johnson",
@@ -882,8 +890,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": "jenna-cromwell",
-          "photoLabel": "Cromwell"
+          "mediaGroup": "jenna-cromwell",
+          "mediaLabel": "Cromwell"
         },
         {
           "id": "bernard-emily-hage",
@@ -894,8 +902,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-janelle-letzen-stewart",
@@ -910,8 +918,8 @@ window.FAMILY_DATA = {
             "Marriage 5/15/2021 (32y 8m 23d)",
             "Joshua Michael Stewart"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-sarah-michaels",
@@ -922,8 +930,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-matthew",
@@ -934,8 +942,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-gary-brinkhurst",
@@ -946,8 +954,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-taisha-shapiro",
@@ -958,8 +966,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-kristin-fox",
@@ -970,8 +978,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-elias-letzen-stewart",
@@ -984,8 +992,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 3/17/24"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-nico-letzen-stewart",
@@ -998,8 +1006,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 5/17/2026"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-asher-michaels",
@@ -1010,8 +1018,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-gabriel-michaels",
@@ -1022,8 +1030,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-arthur-brinkhurst",
@@ -1034,8 +1042,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-isaac-brinkhurst",
@@ -1046,8 +1054,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-elenor-shapiro",
@@ -1058,8 +1066,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-ezra-samuel-shapiro",
@@ -1072,8 +1080,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 2/7/2026"
           ],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-ethan-fox",
@@ -1084,8 +1092,8 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         },
         {
           "id": "bernard-levi-fox",
@@ -1096,20 +1104,31 @@ window.FAMILY_DATA = {
           "w": 250.0,
           "h": 34.0,
           "lines": [],
-          "photoGroup": null,
-          "photoLabel": null
+          "mediaGroup": null,
+          "mediaLabel": null
         }
       ]
     }
   ],
-  "photoGroups": {
+  "mediaGroups": {
     "jenna-cromwell": {
+      "type": "image",
       "src": "assets/jenna-and-cromwell.png",
       "caption": "Jenna and Cromwell",
       "alt": "Jenna and Cromwell together",
       "names": [
         "Jenna",
         "Cromwell"
+      ]
+    },
+    "dan-kole": {
+      "type": "video",
+      "src": "assets/dan-kole.mp4",
+      "poster": "assets/dan-kole-poster.jpg",
+      "caption": "Dan Kole",
+      "alt": "Family video for Dan Kole",
+      "names": [
+        "Dan"
       ]
     }
   }
