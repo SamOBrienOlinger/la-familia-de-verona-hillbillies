@@ -6,7 +6,7 @@
 
 An interactive family album built around the original descendant charts. Choose a name in the diagram to open a profile and its photograph or video, then return to the same place in the tree.
 
-The project builds on Bill’s family-tree research and the charts, photograph and video supplied by the family.
+The project builds on Bill’s family-tree research and the charts, photographs and video supplied by the family.
 
 ## Open it locally
 
@@ -58,6 +58,19 @@ The family identified the supplied clip for Susan Olinger’s husband Dan Kole. 
 The original MOV was remuxed to MP4 without recompression or trimming. The full 15.508-second video and audio file is preserved, with H.264 video, AAC audio and faststart for browser playback. [`dan-kole-poster.jpg`](dist/assets/dan-kole-poster.jpg) is a real frame from that clip.
 
 Playback starts only when the visitor presses Play. Closing the profile or changing to another person pauses and resets the player.
+
+## Bill, Fiachra and Gráinne photographs
+
+The additional photo mappings use these asset paths and source profiles:
+
+| Photograph | Asset | Matching profiles |
+|---|---|---|
+| Bill Stewart | `dist/assets/bill-stewart.jpeg` | `renee-william-probst-stewart` and `bernard-william-probst-stewart` |
+| Fiachra and Gráinne | `dist/assets/fiachra-and-grainne.jpeg` | `renee-fiachra-kenneth-gaj-o-brien` and `renee-grainne-emer-marie-gaj-o-brien` |
+
+Bill is recorded as **William Probst Stewart** in both original charts. Search aliases include “Bill Stewart,” “William Stewart” and “Uncle Bill.” The Fiachra and Gráinne profiles share one photograph and retain their full source names. Their cards occur in Renee’s chart.
+
+The extraction script includes all of these aliases and media mappings so they survive regeneration.
 
 ## Add another photograph or video
 
