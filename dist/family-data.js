@@ -130,7 +130,11 @@ window.FAMILY_DATA = {
         {
           "id": "renee-william-probst-stewart",
           "name": "William Probst Stewart",
-          "aliases": [],
+          "aliases": [
+            "Bill Stewart",
+            "William Stewart",
+            "Uncle Bill"
+          ],
           "x": 590.429,
           "y": 895.179,
           "w": 250.0,
@@ -140,8 +144,8 @@ window.FAMILY_DATA = {
             "Marriage 10/27/1985",
             "Lois Madge Olinger"
           ],
-          "mediaGroup": null,
-          "mediaLabel": null
+          "mediaGroup": "bill-stewart",
+          "mediaLabel": "Bill"
         },
         {
           "id": "renee-sam-timothy-o-brien-olinger",
@@ -307,7 +311,10 @@ window.FAMILY_DATA = {
         {
           "id": "renee-fiachra-kenneth-gaj-o-brien",
           "name": "Fiachra Kenneth Gaj-O'Brien",
-          "aliases": [],
+          "aliases": [
+            "Fiachra",
+            "Fiachra Gaj-O'Brien"
+          ],
           "x": 1340.429,
           "y": 357.679,
           "w": 250.0,
@@ -315,13 +322,18 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 7/6/2014"
           ],
-          "mediaGroup": null,
-          "mediaLabel": null
+          "mediaGroup": "fiachra-grainne",
+          "mediaLabel": "Fiachra"
         },
         {
           "id": "renee-grainne-emer-marie-gaj-o-brien",
           "name": "Gráinne Emer-Marie Gaj-O'Brien",
-          "aliases": [],
+          "aliases": [
+            "Gráinne",
+            "Grainne",
+            "Gráinne Gaj-O'Brien",
+            "Grainne Gaj-O'Brien"
+          ],
           "x": 1340.429,
           "y": 425.679,
           "w": 250.0,
@@ -329,8 +341,8 @@ window.FAMILY_DATA = {
           "lines": [
             "Birth 2/25/2017"
           ],
-          "mediaGroup": null,
-          "mediaLabel": null
+          "mediaGroup": "fiachra-grainne",
+          "mediaLabel": "Gráinne"
         },
         {
           "id": "renee-elias-letzen-stewart",
@@ -611,7 +623,11 @@ window.FAMILY_DATA = {
         {
           "id": "bernard-william-probst-stewart",
           "name": "William Probst Stewart",
-          "aliases": [],
+          "aliases": [
+            "Bill Stewart",
+            "William Stewart",
+            "Uncle Bill"
+          ],
           "x": 990.429,
           "y": 584.179,
           "w": 250.0,
@@ -621,8 +637,8 @@ window.FAMILY_DATA = {
             "Marriage 10/27/1985 (34y 2m 18d)",
             "Lois Madge Olinger"
           ],
-          "mediaGroup": null,
-          "mediaLabel": null
+          "mediaGroup": "bill-stewart",
+          "mediaLabel": "Bill"
         },
         {
           "id": "bernard-jill-miller",
@@ -1129,6 +1145,25 @@ window.FAMILY_DATA = {
       "alt": "Family video for Dan Kole",
       "names": [
         "Dan"
+      ]
+    },
+    "bill-stewart": {
+      "type": "image",
+      "src": "assets/bill-stewart.jpeg",
+      "caption": "Bill Stewart",
+      "alt": "Photograph of Bill Stewart",
+      "names": [
+        "Bill"
+      ]
+    },
+    "fiachra-grainne": {
+      "type": "image",
+      "src": "assets/fiachra-and-grainne.jpeg",
+      "caption": "Fiachra and Gráinne",
+      "alt": "Photograph of Fiachra and Gráinne",
+      "names": [
+        "Fiachra",
+        "Gráinne"
       ]
     }
   }

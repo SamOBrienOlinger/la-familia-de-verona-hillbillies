@@ -50,6 +50,37 @@ VIDEO_NAMES = {
 }
 
 
+ADDITIONAL_PHOTO_PROFILES = {
+    "William Probst Stewart": {
+        "aliases": [
+            "Bill Stewart",
+            "William Stewart",
+            "Uncle Bill"
+        ],
+        "mediaGroup": "bill-stewart",
+        "mediaLabel": "Bill"
+    },
+    "Fiachra Kenneth Gaj-O'Brien": {
+        "aliases": [
+            "Fiachra",
+            "Fiachra Gaj-O'Brien"
+        ],
+        "mediaGroup": "fiachra-grainne",
+        "mediaLabel": "Fiachra"
+    },
+    "Gráinne Emer-Marie Gaj-O'Brien": {
+        "aliases": [
+            "Gráinne",
+            "Grainne",
+            "Gráinne Gaj-O'Brien",
+            "Grainne Gaj-O'Brien"
+        ],
+        "mediaGroup": "fiachra-grainne",
+        "mediaLabel": "Gráinne"
+    }
+}
+
+
 def slug(value):
     ascii_value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode()
     return re.sub(r"[^a-z0-9]+", "-", ascii_value.lower()).strip("-")
@@ -117,23 +148,37 @@ def extract_chart(spec, source_dir, output_dir):
             name = heading_text(headings)
             has_photo = name in PHOTO_NAMES
             has_video = name in VIDEO_NAMES
+            extra_photo = ADDITIONAL_PHOTO_PROFILES.get(name, {})
             people.append({
                 "id": spec["id"] + "-" + slug(name),
                 "name": name,
-                "aliases": PHOTO_NAMES.get(name, VIDEO_NAMES.get(name, [])),
+                "aliases": extra_photo.get(
+                    "aliases", PHOTO_NAMES.get(name, VIDEO_NAMES.get(name, []))
+                ),
                 "x": round(card.x0, 3),
                 "y": round(card.y0, 3),
                 "w": round(card.width, 3),
                 "h": round(card.height, 3),
                 "lines": text_rows(details),
-                "mediaGroup": "jenna-cromwell" if has_photo else ("dan-kole" if has_video else None),
-                "mediaLabel": ("Jenna" if name.startswith("Jenna") else "Cromwell") if has_photo else ("Dan" if has_video else None),
+                "mediaGroup": extra_photo.get(
+                    "mediaGroup",
+                    "jenna-cromwell" if has_photo else ("dan-kole" if has_video else None),
+                ),
+                "mediaLabel": extra_photo.get(
+                    "mediaLabel",
+                    ("Jenna" if name.startswith("Jenna") else "Cromwell")
+                    if has_photo else ("Dan" if has_video else None),
+                ),
             })
 
         assert all(count == 1 for count in assignments), "Every text span must belong to one card."
         assert len({person["id"] for person in people}) == len(people), "Duplicate person IDs."
         assert sum(person["mediaGroup"] == "jenna-cromwell" for person in people) == 2
         assert sum(person["mediaGroup"] == "dan-kole" for person in people) == 1
+        assert sum(person["mediaGroup"] == "bill-stewart" for person in people) == 1
+        assert sum(
+            person["mediaGroup"] == "fiachra-grainne" for person in people
+        ) == (2 if spec["id"] == "renee" else 0)
         for card in cards:
             assert page.rect.contains(card), "Card lies outside the original page."
         for i, first in enumerate(cards):
@@ -207,6 +252,25 @@ def main():
                 "caption": "Dan Kole",
                 "alt": "Family video for Dan Kole",
                 "names": ["Dan"],
+            },
+            "bill-stewart": {
+                "type": "image",
+                "src": "assets/bill-stewart.jpeg",
+                "caption": "Bill Stewart",
+                "alt": "Photograph of Bill Stewart",
+                "names": [
+                    "Bill"
+                ]
+            },
+            "fiachra-grainne": {
+                "type": "image",
+                "src": "assets/fiachra-and-grainne.jpeg",
+                "caption": "Fiachra and Gráinne",
+                "alt": "Photograph of Fiachra and Gráinne",
+                "names": [
+                    "Fiachra",
+                    "Gráinne"
+                ]
             },
         },
     }
