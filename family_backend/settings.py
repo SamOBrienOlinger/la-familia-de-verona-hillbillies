@@ -12,7 +12,7 @@ if TESTING and os.environ.get('DYNO'):
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
 if not SECRET_KEY:
     if DEBUG or TESTING:
-        SECRET_KEY = 'local-development-only-not-valid-for-production-' + 'x' * 32
+        SECRET_KEY = 'eUxj_ruOknHRzKSW7glRkxGTwb6zPBk5Ta67A36LgxUzgdJmlu9U5F3aTpB94scDTPh6CNf98TlBQsY6raBt_g' + 'x' * 32
     else:
         raise ImproperlyConfigured('Set a private SECRET_KEY environment variable.')
 ALLOWED_HOSTS = [s.strip() for s in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') if s.strip()]
