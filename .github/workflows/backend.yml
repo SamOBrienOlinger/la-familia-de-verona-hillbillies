@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: '22'
       - name: Install backend and browser test dependencies
-        run: pip install -r requirements.txt playwright==1.62.1
+        run: pip install -r requirements.txt playwright==1.63.0
       - name: Validate migrations, Django configuration and scripts
         run: |
           python manage.py check
