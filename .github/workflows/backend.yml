@@ -45,6 +45,8 @@ jobs:
           node --check dist/map.js
           node --check dist/collaboration.js
           node tests/map-core.test.cjs
+      - name: Install actual video decoder for upload validation tests
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - name: Run PostgreSQL API and concurrent-edit tests
         run: python manage.py test tests.backend --verbosity 2
       - name: Install browser

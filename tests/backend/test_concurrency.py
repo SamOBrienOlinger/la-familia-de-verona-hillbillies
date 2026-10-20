@@ -3,7 +3,7 @@ import io
 from concurrent.futures import ThreadPoolExecutor
 from threading import Barrier
 from unittest import skipUnless
-from django.db import connection, close_old_connections
+from django.db import connection, connections, close_old_connections
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.test import TransactionTestCase
@@ -28,7 +28,8 @@ class ConcurrentEditingTests(TransactionTestCase):
                 barrier.wait(timeout=10)
                 return operation(client, index).status_code
             finally:
-                close_old_connections()
+                # These workers end here: close even healthy persistent connections.
+                connections.close_all()
         with ThreadPoolExecutor(max_workers=2) as pool:
             return sorted(pool.map(worker, [0, 1]))
 
