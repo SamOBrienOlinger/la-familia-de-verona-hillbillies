@@ -269,7 +269,7 @@
         parents.forEach(function (parent) {
           var parentEdges = graph.edges.filter(function (edge) { return edge.familyId === family.id && edge.type === 'parent' && edge.source === parent.id; });
           var edgeY = parent.y + (parent.y < join.y ? 41 : -41);
-          addPath('M ' + parent.x + ' ' + edgeY + ' L ' + join.x + ' ' + join.y, partnerEdges.concat(parentEdges), true);
+          addPath('M ' + parent.x + ' ' + edgeY + ' L ' + join.x + ' ' + join.y, partnerEdges.concat(parentEdges), Boolean(partnerEdges.length));
         });
       } else join.x += 120;
       family.children.forEach(function (id) {
@@ -335,7 +335,7 @@
   }
 
   function sourceNote() {
-    var note = el('p', 'source-note', 'Connections follow Bill’s original chart. ');
+    var note = el('p', 'source-note', (data.collaborative ? 'Family edits are shown here; the original source is unchanged. ' : 'Connections follow Bill’s original chart. '));
     var link = el('a', 'inline-link', 'View source PDF');
     link.href = sourceUrl(); link.target = '_blank'; link.rel = 'noopener';
     note.append(link);
@@ -362,7 +362,7 @@
         var media = data.mediaGroups[id], person = chart.people.find(function (p) { return p.mediaGroup === id; });
         var card = button('', 'album-card', function () { openPerson(person.id); });
         var image = el('img', 'album-thumb');
-        image.src = media.type === 'video' ? media.poster : media.src;
+        image.src = (media.type === 'video' ? media.poster : media.src) || 'assets/tree-mark.svg';
         image.alt = media.alt; image.loading = 'lazy';
         card.append(image, el('strong', '', media.caption), el('small', '', media.type === 'video' ? '▶ Watch video' : 'Open photograph'));
         grid.append(card);
@@ -394,7 +394,7 @@
     var dialog = $('media-dialog'), photo = $('expanded-photo'), video = $('expanded-video');
     photo.hidden = media.type !== 'image'; video.hidden = media.type !== 'video';
     if (media.type === 'image') { photo.src = media.src; photo.alt = media.alt; }
-    else { video.src = media.src; if (media.poster) video.poster = media.poster; }
+    else { video.src = media.src; if (media.poster) video.poster = media.poster; else video.removeAttribute('poster'); }
     $('media-title').textContent = media.caption;
     $('media-caption').textContent = media.alt;
     showDialog(dialog, trigger);
@@ -411,6 +411,7 @@
     panel.append(el('p', 'eyebrow', 'GENERATION ' + layout.byId[person.id].generation));
     var title = el('h1', 'profile-name', person.name); title.tabIndex = -1; panel.append(title);
     panel.append(el('p', 'profile-source', chart.label));
+    if (person.notes) panel.append(el('p', 'profile-notes', person.notes));
     var media = mediaFor(person);
     if (media) {
       if (media.type === 'video') {
@@ -425,10 +426,11 @@
         panel.append(photoButton);
       }
       panel.append(el('p', 'source-note', media.caption));
+      if (media.credit) panel.append(el('p', 'source-note', 'Credit: ' + media.credit));
       var companions = chart.people.filter(function (p) { return p.mediaGroup === person.mediaGroup && p.id !== person.id; });
       if (companions.length) {
         var group = el('div', 'profile-companions');
-        group.append(el('span', '', 'Also in this photograph'));
+        group.append(el('span', '', media.type === 'video' ? 'Also in this video' : 'Also in this photograph'));
         companions.forEach(function (p) { group.append(button(p.mediaLabel || p.name, 'tag-button', function () { openPerson(p.id); })); });
         panel.append(group);
       }
@@ -521,6 +523,7 @@
     if (state.mode === 'profile') renderProfile(); else if (state.mode === 'route') renderRoute(); else renderExplore();
     panel.scrollTop = 0;
     if (restoreFocus) { var heading = panel.querySelector('h1'); if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); } }
+    if (typeof window.CustomEvent === 'function') document.dispatchEvent(new window.CustomEvent('family:panel'));
   }
 
   function openPerson(id) {
@@ -575,7 +578,7 @@
     document.title = chart.label + ' · La Familia Family Map';
     drawWorld(); renderPanel();
     var anchor = chart.people.find(function (person) { return person.mediaGroup === 'dan-kole'; });
-    var center = layout.byId[anchor ? anchor.id : graph.rootId], frame = visibleFrame();
+    var center = layout.byId[anchor ? anchor.id : graph.rootId] || {x: 0, y: 0}, frame = visibleFrame();
     var scale = mobile() ? 0.62 : 0.76;
     setCamera(frame.x - (center.x + (mobile() ? 0 : 210)) * scale, frame.y - center.y * scale, scale);
     if (options.from && options.to && people.has(options.from) && people.has(options.to)) {
@@ -763,6 +766,22 @@
     resizeTimer = window.setTimeout(function () { if (state.selected) centerNode(state.selected, false); else setCamera(camera.x, camera.y, camera.scale); }, 100);
   });
   window.addEventListener('pagehide', function () { stopVideos(document); });
+
+  // The backend adapter swaps editorial snapshots through this narrow interface.
+  window.FamilyMap = {
+    context: function () { return { chart: state.chart, selected: state.selected }; },
+    replaceSnapshot: function (value) {
+      var old = { x: camera.x, y: camera.y, scale: camera.scale }, options = readHash();
+      var query = state.query, generation = state.generation, memories = state.memories;
+      data = value.data; graphData = value.graph;
+      window.FAMILY_DATA = data; window.FAMILY_GRAPH = graphData;
+      switchChart(state.chart, Object.assign({}, options, { query: query }));
+      state.generation = generation && layout.generations.some(function (g) { return g.index === generation; }) ? generation : null;
+      state.memories = memories;
+      renderPanel(); updateHighlights();
+      if (!state.selected) setCamera(old.x, old.y, old.scale);
+    }
+  };
 
   try {
     var initial = readHash();

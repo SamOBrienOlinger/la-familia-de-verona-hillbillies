@@ -1,30 +1,61 @@
-name: Check collaborative backend
+name: Check collaborative Django backend
 on:
   push:
     branches: [family-map-explorer]
-    paths: ['backend/**', 'tests/**', 'dist/**', 'requirements*.txt', '.github/workflows/backend.yml']
+    paths: ['family_api/**', 'family_backend/**', 'manage.py', 'tests/**', 'dist/**', 'requirements*.txt', '.github/workflows/backend.yml', 'Procfile']
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: collaborative-backend-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: family_test
+          POSTGRES_USER: family_test
+          POSTGRES_PASSWORD: disposable-ci-only
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U family_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      FAMILY_TESTING: '1'
+      DATABASE_URL: postgres://family_test:disposable-ci-only@localhost:5432/family_test
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
-      - name: Install backend dependencies when present
-        if: ${{ hashFiles('requirements.txt') != '' }}
-        run: pip install -r requirements.txt
-      - name: Run backend tests when present
-        if: ${{ hashFiles('backend/tests/test_*.py') != '' }}
-        run: python -m unittest discover -s backend/tests -v
-      - name: Package the committed source only
-        run: git archive --format=zip HEAD -o "$RUNNER_TEMP/family-map-source.zip"
-      - name: Save source snapshot
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - name: Install backend and browser test dependencies
+        run: pip install -r requirements.txt playwright==1.62.1
+      - name: Validate migrations, Django configuration and scripts
+        run: |
+          python manage.py check
+          python manage.py makemigrations --check --dry-run
+          python manage.py collectstatic --noinput
+          node --check dist/map.js
+          node --check dist/collaboration.js
+          node tests/map-core.test.cjs
+      - name: Run PostgreSQL API and concurrent-edit tests
+        run: python manage.py test tests.backend --verbosity 2
+      - name: Install browser
+        run: python -m playwright install --with-deps --only-shell chromium
+      - name: Test real Django browser editing journey
+        run: python manage.py test tests.browser --verbosity 2
+      - name: Save browser evidence
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v5
         with:
-          name: family-map-source
-          path: ${{ runner.temp }}/family-map-source.zip
+          name: collaborative-browser-results
+          path: test-results/
+          if-no-files-found: ignore
           retention-days: 7

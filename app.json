@@ -1,0 +1,15 @@
+{
+  "name": "La Familia collaborative map",
+  "description": "Django REST Framework family records, shared editorial tools and a map viewer.",
+  "repository": "https://github.com/SamOBrienOlinger/la-familia-de-verona-hillbillies/tree/family-map-explorer",
+  "buildpacks": [{"url": "heroku/python"}],
+  "env": {
+    "SECRET_KEY": {"description": "Django signing key", "generator": "secret"},
+    "DEBUG": {"value": "false"},
+    "ALLOWED_HOSTS": {"description": "Exact hostname of the new app; no scheme or wildcard."},
+    "DATABASE_URL": {"description": "Dedicated PostgreSQL connection URL. Provision separately after reviewing pricing."},
+    "MEDIA_BACKEND": {"value": "cloudinary"},
+    "CLOUDINARY_URL": {"description": "Server-only Cloudinary connection URL; never commit it.", "required": false},
+    "CSRF_TRUSTED_ORIGINS": {"description": "Exact https origin of this app.", "required": false}
+  }
+}

@@ -2,3 +2,16 @@ node_modules/
 test-results/
 .test-tools/
 __pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+env.py
+local_settings.py
+*.sqlite3
+local-media/
+staticfiles/
+*.log
+wheels/
