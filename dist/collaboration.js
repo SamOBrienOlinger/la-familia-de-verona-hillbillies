@@ -137,17 +137,18 @@
     form.addEventListener('submit', async event => {
       event.preventDefault(); if (busy) return;
       const values = new FormData(form);
-      busy = true; fields.disabled = true; submit.disabled = true;
+      busy = true; launch.disabled = true; fields.disabled = true; submit.disabled = true;
       dialog.querySelector('#contributor-close').disabled = true;
       const old = submit.textContent; submit.textContent = 'Saving…'; form.setAttribute('aria-busy', 'true');
       let saved = false;
       try {
-        await save(values); saved = true; dirty = false; close(true);
+        await save(values); saved = true; dirty = false;
         try { await session(); await refreshSnapshot(); message('Saved to the shared family record.'); }
         catch (error) { message('Saved, but the map could not refresh. ' + error.message, true); }
+        close(true);
       } catch (error) { showError(error); }
       finally {
-        busy = false; fields.disabled = false; submit.disabled = false; submit.textContent = old; form.removeAttribute('aria-busy');
+        busy = false; launch.disabled = false; fields.disabled = false; submit.disabled = false; submit.textContent = old; form.removeAttribute('aria-busy');
         const closeButton = dialog.querySelector('#contributor-close'); if (closeButton) closeButton.disabled = false;
         if (saved) injectActions();
       }

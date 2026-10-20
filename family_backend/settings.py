@@ -7,6 +7,8 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = os.environ.get('DEBUG', 'false').lower() == 'true'
 TESTING = os.environ.get('FAMILY_TESTING') == '1'
+if TESTING and os.environ.get('DYNO'):
+    raise ImproperlyConfigured('FAMILY_TESTING cannot be enabled on a Heroku dyno.')
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
 if not SECRET_KEY:
     if DEBUG or TESTING:
@@ -17,7 +19,7 @@ ALLOWED_HOSTS = [s.strip() for s in os.environ.get('ALLOWED_HOSTS', 'localhost,1
 if TESTING:
     ALLOWED_HOSTS.append('testserver')
 DATABASES = {'default': dj_database_url.config(
-    default='sqlite:///' + str(BASE_DIR / 'local.sqlite3'), conn_max_age=60,
+    default='sqlite:///' + str(BASE_DIR / 'local.sqlite3'), conn_max_age=0 if TESTING else 60,
     conn_health_checks=True, ssl_require=bool(os.environ.get('DYNO')))}
 if os.environ.get('DYNO') and DATABASES['default']['ENGINE'] != 'django.db.backends.postgresql':
     raise ImproperlyConfigured('Heroku requires a PostgreSQL DATABASE_URL; SQLite is local-only.')
