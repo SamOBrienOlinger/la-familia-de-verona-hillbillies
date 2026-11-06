@@ -34,40 +34,7 @@ Original source snapshots and PDFs are never overwritten by editorial requests.
 
 The Django map groups people and relationships by chart. Each relationship connects two people and records either a parent-to-child link or a partnership. A photograph or video can be attached to multiple people through Django's join table. Sibling links are derived from shared parents. [Django models](family_api/models.py) · [API contract](docs/API.md) · [Family map logic](dist/map-core.js)
 
-```mermaid
-erDiagram
-    accTitle: Family map people, relationships and media
-    accDescr: Charts group people and relationships. Each relationship has a source and a target person. Media can be associated with multiple people.
-    Chart ||..o{ Person : groups
-    Chart ||..o{ Relationship : contains
-    Person ||..o{ Relationship : source
-    Person ||..o{ Relationship : target
-    Person }o..o{ Media : "appears in"
-
-    Chart {
-        string id PK
-        string label
-        int revision
-    }
-    Person {
-        string id PK
-        string chart_id FK
-        string name
-        int generation
-    }
-    Relationship {
-        string id PK
-        string chart_id FK
-        string source_id FK
-        string target_id FK
-        string kind
-    }
-    Media {
-        string id PK
-        string kind
-        string caption
-    }
-```
+[![Charts group people and relationships. Each relationship has a source and a target person. Media can be associated with multiple people.](docs/diagrams/family-map-people-relationships-and-media.svg)](docs/diagrams/family-map-people-relationships-and-media.svg)
 
 ### Stack
 
